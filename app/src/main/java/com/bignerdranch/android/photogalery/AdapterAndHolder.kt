@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class AdapterAndHolder(
     var photoList: List<GalleryItem>,
@@ -32,7 +33,8 @@ class AdapterAndHolder(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is Holder -> {
-                thumbnail.queueThumbnail(holder, photoList[position].url)
+//                thumbnail.queueThumbnail(holder, photoList[position].url)
+                holder.bind2(photoList[position])
                 holder.initializeGalleryItem(photoList[position])
             }
         }
@@ -48,7 +50,15 @@ class AdapterAndHolder(
         lateinit var galleryItem: GalleryItem
 
         fun bind(photo: Bitmap) {
-            imageView.setImageBitmap(photo)
+//            imageView.setImageBitmap(photo)
+//            imageView.setOnClickListener {
+//                val intent = PhotoPageActivity.newIntent(fragment.requireContext(),galleryItem.photoPageUri)
+//                fragment.startActivity(intent)
+//            }
+        }
+
+        fun bind2(photoItem: GalleryItem){
+            Picasso.get().load(photoItem.url).into(imageView)
             imageView.setOnClickListener {
                 val intent = PhotoPageActivity.newIntent(fragment.requireContext(),galleryItem.photoPageUri)
                 fragment.startActivity(intent)
